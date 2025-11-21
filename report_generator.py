@@ -1,0 +1,26 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('esempio.csv', encoding='utf-8')
+df.columns = df.columns.str.strip()
+print(df.head())
+print(df.columns)
+print("Dati importanti: ")
+print(df)
+totale_quantità = df['Quantità'].sum()
+totale_valore = (df['Quantità'] * df['Prezzo']).sum()
+media_prezzo = df['Prezzo'].mean()
+print(f"Totale quantità: {totale_quantità}")
+print(f"Totale valore vendite: {totale_valore}")
+print(f"Prezzo medio: {media_prezzo}")
+plt.figure(figsize=(12,6))
+plt.bar(df['Prodotto'], df['Quantità'])
+plt.title("Quantità vendute per prodotto")
+plt.xlabel("Prodotto")
+plt.ylabel("Quantità")
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+df['Totale'] = df['Quantità'] * df['Prezzo']
+df.to_excel('report.xlsx', index=False)
+print("Report esportato in report.xlsx")
